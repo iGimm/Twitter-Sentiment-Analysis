@@ -1,0 +1,11 @@
+Fixing R error ‘tar: Failed to set default locale’
+
+When trying to install packages in R for Mac OSX(10.10 and above)it is possible to get the next ’tar: Failed to set default locale’ message.
+
+To fix this error it is necessary to change shell properties and set en_US.UTF-8 encoding
+
+The next command will set it right:
+>
+> defaults write org.R-project.R force.LANG en_US.UTF-8
+
+After entering the previous command you must restart your Rconsole or RStudio and you won’t have more warnings about the shell default locale.
