@@ -34,10 +34,7 @@ registerTwitterOAuth(Cred)
 #access_token_secret = ""
 #setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
-api_key             = "L1xbk85CKbvtZpuI6DC9L3c3U"
-api_secret          = "tjmq76hWIgpw7ZaYaMOzVpFq7RRxcfpWpf11ZFZCybYbth5LLx"
-access_token        = "158590874-WG6Bo3wi09Tzj6yZWxo8QtTm4C4FeLNhujndXjTh"
-access_token_secret = "YvV3KsomGL8QmqaqkoVlLsjBYS0AzgbQ03EJZbcPRNYE5"
+
 setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
 #getting tweets from Twitter
