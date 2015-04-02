@@ -42,5 +42,11 @@ setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
 #getting tweets from Twitter
 iPhone.list = searchTwitter('#Apple', n=100, cainfo="cacert.pem")
-iPhone.list = searchTwitter('#Apple', n=5)
 iPhone.list
+Apple.list = searchTwitter('#Apple', n=5)
+Apple.list
+
+EPN.list = searchTwitter('#EPN', n=50)
+EPN.list
+EPN.df = twListToDF(EPN.list)
+write.csv(EPN.df,file="epn.csv",row.names=F)
