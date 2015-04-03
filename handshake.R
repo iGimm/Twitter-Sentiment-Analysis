@@ -12,8 +12,8 @@ requestURL <- "https://api.twitter.com/oauth/request_token"
 accessURL  =  "http://api.twitter.com/oauth/access_token"
 authURL    =  "http://api.twitter.com/oauth/authorize"
 
-consumerKey    = "L1xbk85CKbvtZpuI6DC9L3c3U"
-consumerSecret = "tjmq76hWIgpw7ZaYaMOzVpFq7RRxcfpWpf11ZFZCybYbth5LLx"
+consumerKey    = ""
+consumerSecret = ""
 Cred <- OAuthFactory$new(consumerKey    = consumerKey,
                          consumerSecret = consumerSecret,
                          requestURL     = requestURL,
@@ -32,17 +32,58 @@ registerTwitterOAuth(Cred)
 #api_secret          = ""
 #access_token        = ""
 #access_token_secret = ""
-#setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
-
 setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
 #getting tweets from Twitter
-iPhone.list = searchTwitter('#Apple', n=100, cainfo="cacert.pem")
-iPhone.list
-Apple.list = searchTwitter('#Apple', n=5)
-Apple.list
-
 EPN.list = searchTwitter('#EPN', n=50)
 EPN.list
 EPN.df = twListToDF(EPN.list)
+
+# writting info to csv file
 write.csv(EPN.df,file="epn.csv",row.names=F)
+
+# Algorithm - prev
+library(plyr)
+library(stringr)
+pos.words = c("good","nice")
+neg.words = c("bad","no","not","unlike","dislike")
+score.sentiment = function(sentences, pos.words, neg.words, .progress='none'){
+  
+  require(plyr)
+  require(stringr)
+  
+  scores = laply(sentences, function(sentence, pos.words, neg.words){
+    
+    sentence = gsub('[[:punct:]]','', sentence)
+    sentence = gsub('[[:cntrl:]]','', sentence)
+    sentence = gsub('\\d+','', sentence)
+    
+    sentences = tolower(sentence)
+    
+    word.list = str_split(sentence, '\\s+')
+    
+    words.list = unlist(word.list)
+    
+    pos.matches = match(words, pos.words)
+    neg.matches = match(words, neg.words)
+    
+    pos.matches = !is.na(pos.matches)
+    pos.matches = |is.na(neg.matches)
+    
+    score = sum(pos.matches) - sum(neg.matches)
+    return(score)
+  }, pos.words, neg.words, .progress=.progress)
+  
+  scores.df = data.frame(score=scores, text=sentences)
+  return(scores.df)
+    
+  })
+}
+
+#load sentiment words lists
+hu.liu.pos = scan('positive-words.txt', what='character',comment.char=';')
+hu.liu.neg = scan('negative-words.txt', what='character',comment.char=';')
+
+pos.words = c(hu.liu.pos,'update')
+neg.words = c(hu.liu.neg, 'wtf','wait','waiting','epicfail','mechanical')
+
