@@ -80,9 +80,9 @@ clean.text <- function(str){
 
 print("Obteniendo tweets...")
 # searchTwitter busca un total de N tweets que contengan la palabra especifica en cierto idioma
-#tweets = searchTwitter("macbook", 30, lang="en")
+tweets = searchTwitter("macbook", 30, lang="en")
 #tweets = searchTwitter("macbook", 30, since="2015-03-01", until='2015-04-02', lang="en")
-tweets = searchTwitter("apple", 30, geocode='37.784799,-122.401305,15z', lang="en")
+#tweets = searchTwitter("apple", 30, geocode='37.784799,-122.401305,15z', lang="en")
 # Se convierten los tweets obtenidos
 tweet_txt = sapply(tweets, function(x) x$getText())
 
