@@ -12,8 +12,8 @@ requestURL <- "https://api.twitter.com/oauth/request_token"
 accessURL  =  "http://api.twitter.com/oauth/access_token"
 authURL    =  "http://api.twitter.com/oauth/authorize"
 
-consumerKey    = ""
-consumerSecret = ""
+consumerKey    = "L1xbk85CKbvtZpuI6DC9L3c3U"
+consumerSecret = "tjmq76hWIgpw7ZaYaMOzVpFq7RRxcfpWpf11ZFZCybYbth5LLx"
 Cred <- OAuthFactory$new(consumerKey    = consumerKey,
                          consumerSecret = consumerSecret,
                          requestURL     = requestURL,
@@ -28,10 +28,10 @@ registerTwitterOAuth(Cred)
 
 
 # As SSL is required I'll proceed with the next way of conection between apps
-#api_key             = ""
-#api_secret          = ""
-#access_token        = ""
-#access_token_secret = ""
+api_key             = "L1xbk85CKbvtZpuI6DC9L3c3U"
+api_secret          = "tjmq76hWIgpw7ZaYaMOzVpFq7RRxcfpWpf11ZFZCybYbth5LLx"
+access_token        = "158590874-WG6Bo3wi09Tzj6yZWxo8QtTm4C4FeLNhujndXjTh"
+access_token_secret = "YvV3KsomGL8QmqaqkoVlLsjBYS0AzgbQ03EJZbcPRNYE5"
 setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
 
 #getting tweets from Twitter
@@ -42,26 +42,23 @@ EPN.df = twListToDF(EPN.list)
 # writting info to csv file
 write.csv(EPN.df,file="epn.csv",row.names=F)
 
-# Algorithm - prev
+## Algorithm - prev
 library(plyr)
 library(stringr)
-pos.words = c("good","nice")
-neg.words = c("bad","no","not","unlike","dislike")
+#pos.words = c("good","nice")
+#neg.words = c("bad","no","not","unlike","dislike")
 score.sentiment = function(sentences, pos.words, neg.words, .progress='none'){
   
   require(plyr)
   require(stringr)
   
   scores = laply(sentences, function(sentence, pos.words, neg.words){
-    
     sentence = gsub('[[:punct:]]','', sentence)
     sentence = gsub('[[:cntrl:]]','', sentence)
     sentence = gsub('\\d+','', sentence)
-    
-    sentences = tolower(sentence)
+    sentences = tolower(sentence)    
     
     word.list = str_split(sentence, '\\s+')
-    
     words.list = unlist(word.list)
     
     pos.matches = match(words, pos.words)
